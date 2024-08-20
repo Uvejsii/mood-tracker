@@ -1,4 +1,5 @@
 import { Fugaz_One } from "next/font/google";
+import Calendar from "./Calendar";
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
@@ -19,14 +20,14 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col flex-1 gap-8 sm:gap-12 md:gap-16">
-      <div className="grid grid-cols-1 sm:grid-cols-3 bg-indigo-50 text-indigo-500 rounded-lg">
+      <div className="grid grid-cols-3 bg-indigo-50 text-indigo-500 p-4 gap-4 rounded-lg">
         {Object.keys(statuses).map((status, index) => {
           return (
-            <div key={index} className="p-4 flex flex-col gap-1 sm:gap-2">
-              <p className="font-medium uppercase text-xs sm:text-sm">
+            <div key={index} className="flex flex-col gap-1 sm:gap-2">
+              <p className="font-medium uppercase text-xs sm:text-sm truncate">
                 {status.replaceAll("_", " ")}
               </p>
-              <p className={"text-base sm:text-lg " + fugaz.className}>
+              <p className={"text-base sm:text-lg truncate " + fugaz.className}>
                 {statuses[status]}
               </p>
             </div>
@@ -40,19 +41,29 @@ export default function Dashboard() {
       >
         How do you <span className="textGradient">feel</span> today?
       </h4>
-      <div className="grid grid-cols-2 md:grid-col-5 gap-4">
+      <div className="flex items-stretch flex-wrap gap-4">
         {Object.keys(moods).map((mood, index) => {
           return (
             <button
-              className={" " + (index === 4 ? "col-span-2" : " ")}
+              className={
+                "p-4 px-5 rounded-2xl purpleShadow duration-200 bg-indigo-50 hover:bg-indigo-100 text-center flex flex-col items-center gap-2 flex-1"
+              }
               key={index}
             >
-              <p>{mood}</p>
-              <p>{moods[mood]}</p>
+              <p className="text-4xl sm:text-5xl md:text-6xl">{moods[mood]}</p>
+              <p
+                className={
+                  "text-indigo-500 text-xs sm:text-sm md:text-base " +
+                  fugaz.className
+                }
+              >
+                {mood}
+              </p>
             </button>
           );
         })}
       </div>
+      <Calendar />
     </div>
   );
 }

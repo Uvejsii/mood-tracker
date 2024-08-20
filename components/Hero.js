@@ -22,7 +22,7 @@ export default function Hero() {
         <Button text="Singup" />
         <Button text="Login" dark />
       </div>
-      <Calendar />
+      <Calendar demo />
     </div>
   );
 }
