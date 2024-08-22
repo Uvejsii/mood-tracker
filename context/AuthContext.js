@@ -17,11 +17,11 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
-  const [userDataObj, setUserDataObj] = useState({});
+  const [userDataObj, setUserDataObj] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // AUTH HANDLERS
-  function singup(email, password) {
+  function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
 
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
-    setUserDataObj({});
+    setUserDataObj(null);
     setCurrentUser(null);
     return signOut(auth);
   }
@@ -41,7 +41,10 @@ export function AuthProvider({ children }) {
         // Set the user to our local context state
         setLoading(true);
         setCurrentUser(user);
-        if (!user) return;
+        if (!user) {
+          console.log("No userFound");
+          return;
+        }
 
         // if user exists fetch data from firestore database
         console.log("fetching user data");
@@ -66,7 +69,8 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     userDataObj,
-    singup,
+    setUserDataObj,
+    signup,
     logout,
     login,
     loading,
